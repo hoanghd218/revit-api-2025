@@ -10,6 +10,9 @@
     <Page Update="Bai4Parameter\RenameSheet\View\RenameSheetView.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Bai5EdittingCreating\RealProject\DimensionGrid\View\DimensionGridView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\RevitAddIn1View.xaml">
       <SubType>Designer</SubType>
     </Page>

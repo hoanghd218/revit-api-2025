@@ -59,4 +59,10 @@
         <Folder Include="Models" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Update="Bai5EdittingCreating\RealProject\DimensionGrid\View\DimensionGridView.xaml.cs">
+        <SubType>Code</SubType>
+      </Compile>
+    </ItemGroup>
+
 </Project>
