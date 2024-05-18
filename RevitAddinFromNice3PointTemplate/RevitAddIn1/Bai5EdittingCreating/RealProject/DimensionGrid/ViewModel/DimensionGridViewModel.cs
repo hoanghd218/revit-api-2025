@@ -1,4 +1,8 @@
-﻿using Autodesk.Revit.UI;
+﻿using System.IO;
+using System.Net.Http.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 using RevitAddIn1.Bai5EdittingCreating.RealProject.DimensionGrid.Model;
 using RevitAddIn1.Bai5EdittingCreating.RealProject.DimensionGrid.View;
@@ -21,6 +25,9 @@ namespace RevitAddIn1.Bai5EdittingCreating.RealProject.DimensionGrid.ViewModel
         private Document doc;
         private UIDocument uiDoc;
         public DimensionGridView DimensionGridView { get; set; }
+
+        private string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) +
+                              "\\HocRevitAPI\\DimensionGrid.json";
         public DimensionGridViewModel(Document doc, UIDocument uiDoc)
         {
             this.doc = doc;
@@ -39,6 +46,9 @@ namespace RevitAddIn1.Bai5EdittingCreating.RealProject.DimensionGrid.ViewModel
 
 
             SelectedDimensionType = DimensionTypes.FirstOrDefault();
+
+
+            LoadData();
 
         }
 
@@ -113,10 +123,50 @@ namespace RevitAddIn1.Bai5EdittingCreating.RealProject.DimensionGrid.ViewModel
 
                 tx.Commit();
             }
+
+            SaveData();
         }
         void Close()
         {
 
+        }
+
+
+        void SaveData()
+        {
+            var jsonData = new DimensionGridJsonModel()
+            {
+                SelectedDimensionTypeName = SelectedDimensionType.Name,
+                Distance = Distance
+            };
+
+            var jsonString=JsonSerializer.Serialize(jsonData);
+
+            if (!Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) +
+                                  "\\HocRevitAPI"))
+            {
+                Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) +
+                                          "\\HocRevitAPI");
+            }
+
+            File.WriteAllText(path,jsonString);
+        }
+
+        void LoadData()
+        {
+            if (File.Exists(path))
+            {
+                var text = File.ReadAllText(path);
+                var data = JsonSerializer.Deserialize<DimensionGridJsonModel>(text);
+
+                if (data!=null)
+                {
+                    Distance = data.Distance;
+
+                    SelectedDimensionType =
+                        DimensionTypes.FirstOrDefault(x => x.Name == data.SelectedDimensionTypeName);
+                }
+            }
         }
     }
 }
