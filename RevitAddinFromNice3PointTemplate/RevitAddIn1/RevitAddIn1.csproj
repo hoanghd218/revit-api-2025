@@ -68,6 +68,9 @@
       <Compile Update="Bai5EdittingCreating\CreateSheet\View\CreateSheetView.xaml.cs">
         <SubType>Code</SubType>
       </Compile>
+      <Compile Update="Bai6Geometry\CreatePilesFromCad\View\CreatePileFromCadView.xaml.cs">
+        <SubType>Code</SubType>
+      </Compile>
     </ItemGroup>
 
 </Project>
