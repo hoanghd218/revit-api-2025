@@ -42,6 +42,11 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <None Remove="Resources\Icons\RibbonIcon16.png" />
+      <None Remove="Resources\Icons\RibbonIcon32.png" />
+    </ItemGroup>
+
+    <ItemGroup>
         <PackageReference Include="EPPlus" Version="5.8.14" />
         <PackageReference Include="morelinq" Version="4.2.0" />
         <PackageReference Include="Nice3point.Revit.Build.Tasks" Version="1.*" />
@@ -53,12 +58,16 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Resource Include="Resources\Icons\RibbonIcon16.png" />
-        <Resource Include="Resources\Icons\RibbonIcon32.png" />
+        <Folder Include="Models" />
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Models" />
+      <Resource Include="Resources\Icons\RibbonIcon16.png">
+        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      </Resource>
+      <Resource Include="Resources\Icons\RibbonIcon32.png">
+        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      </Resource>
     </ItemGroup>
 
     <ItemGroup>
@@ -71,6 +80,12 @@
       <Compile Update="Bai6Geometry\CreatePilesFromCad\View\CreatePileFromCadView.xaml.cs">
         <SubType>Code</SubType>
       </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="Resources\Icons\edit32.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
 </Project>
