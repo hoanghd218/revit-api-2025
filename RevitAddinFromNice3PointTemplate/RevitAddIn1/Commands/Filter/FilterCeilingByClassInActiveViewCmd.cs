@@ -5,7 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using Autodesk.Revit.Attributes;
+using MoreLinq.Extensions;
 using Nice3point.Revit.Toolkit.External;
+using RevitAddIn1.Utils;
 
 namespace RevitAddIn1.Commands.Filter
 {
@@ -18,7 +20,7 @@ namespace RevitAddIn1.Commands.Filter
             var ceilings = new FilteredElementCollector(Document, ActiveView.Id).OfClass(typeof(Ceiling))
                 .ToElements();
 
-            var categories = ceilings.Select(x => x.Category.Name).DistinctBy(x => x).ToList();
+            var categories = ceilings.Select(x => x.Category.Name).DistinctBy2(x => x).ToList();
 
 
 

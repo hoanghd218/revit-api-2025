@@ -1,8 +1,9 @@
 ﻿using System.IO;
-using System.Text.Json;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
+using MoreLinq;
+using Newtonsoft.Json;
 using RevitAddIn1.Bai5EdittingCreating.RealProject.DimensionGrid.Model;
 using RevitAddIn1.Bai6Geometry.CreatePilesFromCad.Model;
 using RevitAddIn1.Bai6Geometry.CreatePilesFromCad.View;
@@ -148,7 +149,7 @@ namespace RevitAddIn1.Bai6Geometry.CreatePilesFromCad.ViewModel
 
             };
 
-            var jsonString = JsonSerializer.Serialize(jsonData);
+            var jsonString = JsonConvert.SerializeObject(jsonData);
 
             if (!Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) +
                                   "\\HocRevitAPI"))
@@ -165,7 +166,7 @@ namespace RevitAddIn1.Bai6Geometry.CreatePilesFromCad.ViewModel
             if (File.Exists(path))
             {
                 var text = File.ReadAllText(path);
-                var data = JsonSerializer.Deserialize<DimensionGridJsonModel>(text);
+                var data = JsonConvert.DeserializeObject<DimensionGridJsonModel>(text);
 
                 if (data != null)
                 {

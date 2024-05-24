@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using Autodesk.Revit.Attributes;
+using MoreLinq.Extensions;
 using Nice3point.Revit.Toolkit.External;
+using RevitAddIn1.Utils;
 
 namespace RevitAddIn1.Commands.Filter
 {
@@ -18,7 +15,7 @@ namespace RevitAddIn1.Commands.Filter
             var wallsByClass = new FilteredElementCollector(Document).OfClass(typeof(Wall))
                 .ToElements();
 
-            var categories = wallsByClass.Select(x => x.Category.Name).DistinctBy(x => x).ToList();
+            var categories = wallsByClass.Select(x => x.Category.Name).DistinctBy2(x => x).ToList();
 
 
 

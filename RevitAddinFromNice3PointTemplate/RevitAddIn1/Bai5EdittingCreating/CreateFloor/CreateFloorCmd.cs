@@ -45,7 +45,17 @@ namespace RevitAddIn1.Bai5EdittingCreating.CreateFloor
             Transaction transaction = new Transaction(doc, "Create Floor");
             transaction.Start();
 
-            Floor.Create(doc, new List<CurveLoop>(){curveLoop}, floorType.Id, ActiveView.GenLevel.Id);
+#if REVIT2022_OR_GREATER
+            Floor.Create(doc, new List<CurveLoop>() { curveLoop }, floorType.Id, ActiveView.GenLevel.Id);
+#else
+            var ca = new CurveArray();
+            ca.Append(ab);
+            ca.Append(bc);
+            ca.Append(cd);
+            ca.Append(da);
+            doc.Create.NewFloor(ca, floorType, ActiveView.GenLevel, true);
+#endif
+
 
             transaction.Commit();
 
