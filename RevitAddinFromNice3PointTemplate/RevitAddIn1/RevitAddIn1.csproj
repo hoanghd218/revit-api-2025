@@ -82,6 +82,9 @@
       <Compile Update="Bai6Geometry\CreatePilesFromCad\View\CreatePileFromCadView.xaml.cs">
         <SubType>Code</SubType>
       </Compile>
+      <Compile Update="ThucChien\ColumnRebar\View\ColumnRebarView.xaml.cs">
+        <SubType>Code</SubType>
+      </Compile>
     </ItemGroup>
 
     <ItemGroup>
