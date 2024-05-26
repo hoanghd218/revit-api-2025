@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using System.Printing;
+
 using System.Windows;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
@@ -139,9 +139,11 @@ namespace RevitAddIn1.ThucChien.ColumnRebar.ViewModel
                 .OrderBy(x => x.Name).ToList();
 
 
-            XDiameter = Diameters.FirstOrDefault(x => x.BarNominalDiameter.FeetToMm() > 20);
-            YDiameter = Diameters.FirstOrDefault(x => x.BarNominalDiameter.FeetToMm() > 20);
-            StirrupDiameter = Diameters.FirstOrDefault(x => x.BarNominalDiameter.FeetToMm() < 12);
+
+            XDiameter = Diameters.FirstOrDefault(x => x.BarDiameter().FeetToMm() > 20);
+            XDiameter = Diameters.FirstOrDefault(x => x.BarDiameter().FeetToMm() > 20);
+            YDiameter = Diameters.FirstOrDefault(x => x.BarDiameter().FeetToMm() > 20);
+            StirrupDiameter = Diameters.FirstOrDefault(x => x.BarDiameter().FeetToMm() < 12);
 
             LoadData();
 
@@ -189,7 +191,7 @@ namespace RevitAddIn1.ThucChien.ColumnRebar.ViewModel
 
             var o1 = columnModel.D.Add(columnModel.XVector * Cover).Add(columnModel.YVector * Cover);
 
-            o1 = new XYZ(o1.X, o1.Y, columnModel.BotElevation + Cover + StirrupDiameter.BarNominalDiameter / 2);
+            o1 = new XYZ(o1.X, o1.Y, columnModel.BotElevation + Cover + StirrupDiameter.BarDiameter() / 2);
 
             var rebar = Rebar.CreateFromRebarShape(doc, shape, StirrupDiameter, columnModel.Column, o1, columnModel.XVector,
                  columnModel.YVector);
@@ -197,14 +199,14 @@ namespace RevitAddIn1.ThucChien.ColumnRebar.ViewModel
             var shapeDrivenAccessor = rebar.GetShapeDrivenAccessor();
             shapeDrivenAccessor.ScaleToBox(o1, columnModel.XVector * (columnModel.Width - 2 * Cover), columnModel.YVector * (columnModel.Height - 2 * Cover));
 
-            shapeDrivenAccessor.SetLayoutAsMaximumSpacing(StirrupSpacing.MmToFeet(), (columnModel.TopElevation - columnModel.BotElevation) - 2 * Cover - StirrupDiameter.BarNominalDiameter, true, true, true);
+            shapeDrivenAccessor.SetLayoutAsMaximumSpacing(StirrupSpacing.MmToFeet(), (columnModel.TopElevation - columnModel.BotElevation) - 2 * Cover - StirrupDiameter.BarDiameter(), true, true, true);
         }
 
         void CreateXMainRebar()
         {
 
-            var spacing2Rebars = (columnModel.Width - 2 * Cover - 2 * StirrupDiameter.BarNominalDiameter -
-                                 XDiameter.BarNominalDiameter) / (NumberOfXRebar - 1);
+            var spacing2Rebars = (columnModel.Width - 2 * Cover - 2 * StirrupDiameter.BarDiameter() -
+                                 XDiameter.BarDiameter()) / (NumberOfXRebar - 1);
 
 
             //Top Layers
@@ -214,9 +216,9 @@ namespace RevitAddIn1.ThucChien.ColumnRebar.ViewModel
             {
 
                 var o2 = columnModel.A.Add(columnModel.XVector *
-                                           (Cover + StirrupDiameter.BarNominalDiameter + XDiameter.BarNominalDiameter / 2))
+                                           (Cover + StirrupDiameter.BarDiameter() + XDiameter.BarDiameter() / 2))
                     .Add(-columnModel.YVector *
-                         (Cover + StirrupDiameter.BarNominalDiameter + XDiameter.BarNominalDiameter / 2));
+                         (Cover + StirrupDiameter.BarDiameter() + XDiameter.BarDiameter() / 2));
 
                 o2 = new XYZ(o2.X, o2.Y, columnModel.BotElevation);
 
@@ -224,8 +226,8 @@ namespace RevitAddIn1.ThucChien.ColumnRebar.ViewModel
                 o2 = o2.Add(columnModel.XVector * i * spacing2Rebars);
 
                 var columnHeight = columnModel.TopElevation - columnModel.BotElevation;
-                var line20 = Line.CreateBound(o2, o2.Add(XYZ.BasisZ * (columnHeight + 20 * XDiameter.BarNominalDiameter)));
-                var line30 = Line.CreateBound(o2, o2.Add(XYZ.BasisZ * (columnHeight + 30 * XDiameter.BarNominalDiameter)));
+                var line20 = Line.CreateBound(o2, o2.Add(XYZ.BasisZ * (columnHeight + 20 * XDiameter.BarDiameter())));
+                var line30 = Line.CreateBound(o2, o2.Add(XYZ.BasisZ * (columnHeight + 30 * XDiameter.BarDiameter())));
 
 
                 if (i % 2 == 0)
@@ -249,8 +251,8 @@ namespace RevitAddIn1.ThucChien.ColumnRebar.ViewModel
 
 
             ElementTransformUtils.CopyElements(doc, topRebars.Select(x => x.Id).ToList(), columnModel.YVector * -1 *
-                (columnModel.Height - 2 * Cover - 2 * StirrupDiameter.BarNominalDiameter -
-                 XDiameter.BarNominalDiameter));
+                (columnModel.Height - 2 * Cover - 2 * StirrupDiameter.BarDiameter() -
+                 XDiameter.BarDiameter()));
 
 
    
@@ -260,8 +262,8 @@ namespace RevitAddIn1.ThucChien.ColumnRebar.ViewModel
         void CreateYMainRebar()
         {
 
-            var spacing2Rebars = (columnModel.Height - 2 * Cover - 2 * StirrupDiameter.BarNominalDiameter -
-                                 XDiameter.BarNominalDiameter) / (NumberOfYRebar - 1);
+            var spacing2Rebars = (columnModel.Height - 2 * Cover - 2 * StirrupDiameter.BarDiameter() -
+                                 XDiameter.BarDiameter()) / (NumberOfYRebar - 1);
 
 
             //Left Layers
@@ -279,9 +281,9 @@ namespace RevitAddIn1.ThucChien.ColumnRebar.ViewModel
 
 
                     var o2 = columnModel.A.Add(columnModel.XVector *
-                                               (Cover + StirrupDiameter.BarNominalDiameter + XDiameter.BarNominalDiameter / 2))
+                                               (Cover + StirrupDiameter.BarDiameter() + XDiameter.BarDiameter() / 2))
                         .Add(-columnModel.YVector *
-                             (Cover + StirrupDiameter.BarNominalDiameter + XDiameter.BarNominalDiameter / 2));
+                             (Cover + StirrupDiameter.BarDiameter() + XDiameter.BarDiameter() / 2));
 
                     o2 = new XYZ(o2.X, o2.Y, columnModel.BotElevation);
 
@@ -289,8 +291,8 @@ namespace RevitAddIn1.ThucChien.ColumnRebar.ViewModel
                     o2 = o2.Add(columnModel.YVector*-1 * i * spacing2Rebars);
 
                     var columnHeight = columnModel.TopElevation - columnModel.BotElevation;
-                    var line20 = Line.CreateBound(o2, o2.Add(XYZ.BasisZ * (columnHeight + 20 * XDiameter.BarNominalDiameter)));
-                    var line30 = Line.CreateBound(o2, o2.Add(XYZ.BasisZ * (columnHeight + 30 * XDiameter.BarNominalDiameter)));
+                    var line20 = Line.CreateBound(o2, o2.Add(XYZ.BasisZ * (columnHeight + 20 * XDiameter.BarDiameter())));
+                    var line30 = Line.CreateBound(o2, o2.Add(XYZ.BasisZ * (columnHeight + 30 * XDiameter.BarDiameter())));
 
 
                     if (i % 2 == 0)
@@ -313,8 +315,8 @@ namespace RevitAddIn1.ThucChien.ColumnRebar.ViewModel
             }
 
             ElementTransformUtils.CopyElements(doc, topRebars.Select(x => x.Id).ToList(), columnModel.XVector  *
-                (columnModel.Width - 2 * Cover - 2 * StirrupDiameter.BarNominalDiameter -
-                 XDiameter.BarNominalDiameter));
+                (columnModel.Width - 2 * Cover - 2 * StirrupDiameter.BarDiameter() -
+                 XDiameter.BarDiameter()));
 
         }
         void LoadCad()
