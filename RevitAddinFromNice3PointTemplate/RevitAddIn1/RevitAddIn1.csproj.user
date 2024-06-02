@@ -2,11 +2,17 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup />
   <ItemGroup>
+    <Compile Update="Bai13License\ComputerIdView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Bai4Parameter\RenameSheet\View\RenameSheetView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Bai13License\ComputerIdView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Bai4Parameter\RenameSheet\View\RenameSheetView.xaml">
       <SubType>Designer</SubType>
     </Page>

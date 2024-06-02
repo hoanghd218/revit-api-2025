@@ -66,6 +66,10 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Reference Include="System.Management" />
+    </ItemGroup>
+
+    <ItemGroup>
       <Resource Include="Resources\Icons\RibbonIcon16.png">
         <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       </Resource>

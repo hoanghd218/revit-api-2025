@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using Autodesk.Revit.Attributes;
 using Nice3point.Revit.Toolkit.External;
+using RevitAddIn1.Utils;
 
 namespace RevitAddIn1.Bai4Parameter.ColumnBeamSlabConcreteVolume
 {
@@ -10,7 +11,10 @@ namespace RevitAddIn1.Bai4Parameter.ColumnBeamSlabConcreteVolume
     {
         public override void Execute()
         {
-
+            if (!LicenseUtils.IsLicenseValid())
+            {
+                return;
+            }
 
             var columnBeamSlabsFilter = new ElementMulticategoryFilter(new List<BuiltInCategory>()
             {

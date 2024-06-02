@@ -22,6 +22,8 @@ namespace RevitAddIn1
     [UsedImplicitly]
     public class Application : ExternalApplication
     {
+    
+
         public override void OnStartup()
         {
             CreateRibbon();
@@ -33,7 +35,7 @@ namespace RevitAddIn1
 
         private void CreateRibbon()
         {
-            var panel = Application.CreatePanel( "Common Tools", "Revit 2025 API");
+            var panel = Application.CreatePanel("Common Tools", "Revit 2025 API");
 
             var sb = panel.AddSplitButton("View", "View Tool");
             sb.AddPushButton<CreateSheetCmd>("Create Sheet")
@@ -48,7 +50,7 @@ namespace RevitAddIn1
                 CreatePushButtonData<ColumnBeamSlabConcreteVolumeCmd>("Volume",
                     "/RevitAddIn1;component/Resources/Icons/RibbonIcon32.png",
                     "/RevitAddIn1;component/Resources/Icons/RibbonIcon16.png"),
-                
+
                 CreatePushButtonData<SetMarkCmd>("Set Mark", "/RevitAddIn1;component/Resources/Icons/RibbonIcon32.png",
                     "/RevitAddIn1;component/Resources/Icons/RibbonIcon16.png"),
 
@@ -61,7 +63,7 @@ namespace RevitAddIn1
 
 
 
-        PushButtonData CreatePushButtonData<TCommand>(string buttonText,string uri32,string uri16)
+        PushButtonData CreatePushButtonData<TCommand>(string buttonText, string uri32, string uri16)
             where TCommand : IExternalCommand, new()
         {
             var command = typeof(TCommand);
