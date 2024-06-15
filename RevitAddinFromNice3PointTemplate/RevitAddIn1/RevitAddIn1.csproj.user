@@ -25,6 +25,9 @@
     <Page Update="Bai6Geometry\CreatePilesFromCad\View\CreatePileFromCadView.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Bai8ExternalEvent\View\CreateSheetView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="ThucChien\ColumnRebar\View\ColumnRebarView.xaml">
       <SubType>Designer</SubType>
     </Page>
