@@ -63,6 +63,8 @@
 
     <ItemGroup>
         <Folder Include="Models" />
+        <Folder Include="ThucChien\BeamRebar\ViewModel\" />
+        <Folder Include="ThucChien\BeamRebar\Model\" />
     </ItemGroup>
 
     <ItemGroup>
@@ -89,9 +91,6 @@
         <SubType>Code</SubType>
       </Compile>
       <Compile Update="Bai8ExternalEvent\View\CreateSheetView.xaml.cs">
-        <SubType>Code</SubType>
-      </Compile>
-      <Compile Update="ThucChien\BeamRebar\View\BeamRebarView.xaml.cs">
         <SubType>Code</SubType>
       </Compile>
       <Compile Update="ThucChien\ColumnRebar\View\ColumnRebarView.xaml.cs">

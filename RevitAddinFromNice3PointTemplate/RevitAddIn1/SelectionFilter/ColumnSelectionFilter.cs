@@ -23,4 +23,23 @@ namespace RevitAddIn1.SelectionFilter
             return false;
         }
     }
+
+
+
+    public class BeamSelectionFilter : ISelectionFilter
+    {
+        public bool AllowElement(Element elem)
+        {
+#if REVIT2024_OR_GREATER
+            return elem.Category?.Id.Value == -2001320;
+#else
+            return elem.Category?.Id.IntegerValue == -2001320;
+#endif
+        }
+
+        public bool AllowReference(Reference reference, XYZ position)
+        {
+            return false;
+        }
+    }
 }
